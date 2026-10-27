@@ -7,7 +7,7 @@ function validate(req, res, next) {
   next();
 }
 function notFound(req, res) {
-  res.status(404).json({ error: 'Route N0Oot found' });
+  res.status(404).json({ error: 'Route not found' });
 }
 // Central error handling middleware (4 arguments)
 function errorHandler(err, req, res, next) {
