@@ -16,7 +16,7 @@ function protect(req, res, next) {
 // Role-based access control
 function allow(...roles) {
   return (req, res, next) => {
-    if (!roles.includes(req.user.role)) return res.status(403).json({ error: 'Not Allowed for your role' });
+    if (!roles.includes(req.user.role)) return res.status(403).json({ error: 'Not allowed for your role' });
     next();
   };
 }
