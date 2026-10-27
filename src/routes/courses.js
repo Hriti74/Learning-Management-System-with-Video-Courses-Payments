@@ -1,4 +1,4 @@
-const router = require('express').Router();
+const router = require('express').Router()
 const { body, query } = require('express-validator');
 const store = require('../store');
 const { protect, allow } = require('../middleware/auth');
