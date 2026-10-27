@@ -1,0 +1,346 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "name": "System Admin",
+      "email": "admin@lms.com",
+      "role": "admin",
+      "status": "active",
+      "passwordHash": "$2a$10$VGAUcOxuvXuhDx4Uuh/8U.JGUC//wFUUK.OCAGReBedIBUgFGsRpe",
+      "createdAt": "2026-10-25T18:27:28.842Z"
+    },
+    {
+      "id": 2,
+      "name": "Dr. John Doe",
+      "email": "teacher@lms.com",
+      "role": "instructor",
+      "status": "active",
+      "passwordHash": "$2a$10$j/CeEpg3yFfE4kh2Bkrk7eIPV1zrVis1ge88N19mMfkfgZhKKsoSy",
+      "createdAt": "2026-10-25T18:27:28.905Z"
+    },
+    {
+      "id": 3,
+      "name": "Rahul Sharma",
+      "email": "student@lms.com",
+      "role": "student",
+      "status": "active",
+      "passwordHash": "$2a$10$9VWSALlmb72gk5FGvy3Yle7k3D/FTVvJzlm7niEsKgm.ZFQW8EoRm",
+      "createdAt": "2026-10-25T18:27:28.962Z"
+    }
+  ],
+  "courses": [
+    {
+      "id": 4,
+      "instructorId": 2,
+      "instructorName": "Dr. John Doe",
+      "title": "Full-Stack Web Development & Modern Node.js",
+      "description": "Master HTML5, CSS3, ES6+, Node.js core modules (Streams, Buffers, Events), Express.js REST APIs, JWT authentication, and secure video streaming.",
+      "price": 499,
+      "category": "Web Development",
+      "level": "beginner",
+      "status": "approved",
+      "avgRating": 4.8,
+      "enrollCount": 1,
+      "createdAt": "2026-10-25T18:27:28.963Z"
+    },
+    {
+      "id": 5,
+      "instructorId": 2,
+      "instructorName": "Dr. John Doe",
+      "title": "Node.js Backend Architecture & Core Modules",
+      "description": "Deep dive into the Node.js event loop, streams, chunked buffering, custom middleware pipelines, and scalable microservice architectures.",
+      "price": 0,
+      "category": "Backend Engineering",
+      "level": "intermediate",
+      "status": "approved",
+      "avgRating": 4.9,
+      "enrollCount": 0,
+      "createdAt": "2026-10-25T18:27:28.963Z"
+    },
+    {
+      "id": 6,
+      "instructorId": 2,
+      "instructorName": "Dr. John Doe",
+      "title": "React 18 & Redux Toolkit Masterclass",
+      "description": "Build enterprise-grade single-page applications with modern component patterns, hooks, and scalable client state.",
+      "price": 799,
+      "category": "Frontend Development",
+      "level": "advanced",
+      "status": "pending",
+      "avgRating": 5,
+      "enrollCount": 0,
+      "createdAt": "2026-10-25T18:27:28.963Z"
+    }
+  ],
+  "sections": [
+    {
+      "id": 7,
+      "courseId": 4,
+      "title": "Module 1: Web Fundamentals & JavaScript ES6+",
+      "order": 1
+    },
+    {
+      "id": 8,
+      "courseId": 4,
+      "title": "Module 2: Node.js Core Modules & Express APIs",
+      "order": 2
+    },
+    {
+      "id": 9,
+      "courseId": 4,
+      "title": "Module 3: Project Assessment & Capstone",
+      "order": 3
+    },
+    {
+      "id": 16,
+      "courseId": 5,
+      "title": "Module 1: Deep Dive into Node.js Internals",
+      "order": 1
+    }
+  ],
+  "lessons": [
+    {
+      "id": 10,
+      "courseId": 4,
+      "sectionId": 7,
+      "title": "01. Introduction to Web Fundamentals & ES6",
+      "type": "video",
+      "videoFile": "sample-lesson.mp4",
+      "originalName": "web-fundamentals.mp4",
+      "durationSec": 360,
+      "isPreview": true,
+      "order": 1,
+      "transcript": "Welcome to Web Fundamentals! In this lecture we explore the DOM, ES6 features like destructuring, arrow functions, and the Fetch API.",
+      "resources": [
+        {
+          "id": 11,
+          "title": "Web Fundamentals Cheatsheet (PDF)",
+          "filename": "sample-lesson.mp4",
+          "originalName": "web-fundamentals-cheatsheet.pdf",
+          "sizeBytes": 102400
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "courseId": 4,
+      "sectionId": 8,
+      "title": "02. Node.js Core: Streams, Buffers & HTTP Range Streaming",
+      "type": "video",
+      "videoFile": "sample-lesson.mp4",
+      "originalName": "nodejs-streams.mp4",
+      "durationSec": 480,
+      "isPreview": false,
+      "order": 2,
+      "transcript": "In this session, we investigate how Node.js handles I/O via the libuv Event Loop, and why fs.createReadStream with 206 Partial Content streams massive media files without filling RAM.",
+      "resources": [
+        {
+          "id": 13,
+          "title": "Node Streams Architecture Source Code",
+          "filename": "sample-lesson.mp4",
+          "originalName": "streams-architecture.zip",
+          "sizeBytes": 102400
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "courseId": 4,
+      "sectionId": 9,
+      "title": "03. Comprehensive Quiz: JavaScript, Node & Express",
+      "type": "quiz",
+      "isPreview": false,
+      "order": 3,
+      "questions": [
+        {
+          "q": "Which Node.js core module is primarily used to stream chunks of large media files?",
+          "options": [
+            "path",
+            "fs (createReadStream)",
+            "os",
+            "dns"
+          ],
+          "answer": 1
+        },
+        {
+          "q": "What HTTP status code is returned for byte-range chunked media streaming?",
+          "options": [
+            "200 OK",
+            "201 Created",
+            "206 Partial Content",
+            "304 Not Modified"
+          ],
+          "answer": 2
+        },
+        {
+          "q": "Which mechanism prevents unauthorized users from downloading course videos directly?",
+          "options": [
+            "Expiring Signed URLs with Token Verification",
+            "CSS hiding",
+            "Disabling right click",
+            "HTTP Cookies without tokens"
+          ],
+          "answer": 0
+        },
+        {
+          "q": "In Express, which middleware argument count identifies an Error Handling Middleware?",
+          "options": [
+            "2 (req, res)",
+            "3 (req, res, next)",
+            "4 (err, req, res, next)",
+            "1 (err)"
+          ],
+          "answer": 2
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "courseId": 4,
+      "sectionId": 9,
+      "title": "04. Final Assignment: Build a Secure REST API",
+      "type": "assignment",
+      "isPreview": false,
+      "order": 4,
+      "instructions": "Build and deploy a RESTful API implementing JWT Authentication, Role-Based Access Control (RBAC), and Multer file uploads. Submit your GitHub repository URL and documentation notes below."
+    },
+    {
+      "id": 17,
+      "courseId": 5,
+      "sectionId": 16,
+      "title": "01. The Event Loop, Call Stack & Microtask Queues",
+      "type": "video",
+      "videoFile": "sample-lesson.mp4",
+      "originalName": "event-loop.mp4",
+      "durationSec": 540,
+      "isPreview": true,
+      "order": 1,
+      "transcript": "Understanding timers, I/O polling, check phase (setImmediate), and process.nextTick priority.",
+      "resources": []
+    },
+    {
+      "id": 18,
+      "courseId": 5,
+      "sectionId": 16,
+      "title": "02. Knowledge Check: Event Loop & Asynchronous I/O",
+      "type": "quiz",
+      "isPreview": false,
+      "order": 2,
+      "questions": [
+        {
+          "q": "Which phase of the Node.js event loop executes setImmediate callbacks?",
+          "options": [
+            "Timers",
+            "Poll",
+            "Check",
+            "Close callbacks"
+          ],
+          "answer": 2
+        },
+        {
+          "q": "Does process.nextTick execute before or after the current operation finishes and before microtasks?",
+          "options": [
+            "Immediately after current operation, before the event loop continues",
+            "At the end of the next tick",
+            "Only after timers",
+            "Never"
+          ],
+          "answer": 0
+        }
+      ]
+    }
+  ],
+  "enrollments": [
+    {
+      "id": 19,
+      "courseId": 4,
+      "userId": 3,
+      "paymentId": "PAY-INIT-DEMO-4242",
+      "amount": 499,
+      "enrolledAt": "2026-10-22T18:27:28.963Z",
+      "completedAt": null
+    }
+  ],
+  "progress": [
+    {
+      "userId": 3,
+      "lessonId": 10,
+      "lastPosition": 125,
+      "isCompleted": true,
+      "updatedAt": 1792780048964
+    },
+    {
+      "userId": 3,
+      "lessonId": 12,
+      "lastPosition": 45,
+      "isCompleted": false,
+      "updatedAt": 1792866448964
+    }
+  ],
+  "attempts": [],
+  "payments": [
+    {
+      "id": 20,
+      "paymentId": "PAY-INIT-DEMO-4242",
+      "userId": 3,
+      "courseId": 4,
+      "amount": 499,
+      "status": "success",
+      "createdAt": "2026-10-22T18:27:28.964Z"
+    }
+  ],
+  "payouts": [],
+  "notes": [
+    {
+      "id": 21,
+      "userId": 3,
+      "lessonId": 10,
+      "text": "Important: Arrow functions do not bind their own \"this\" context.",
+      "timestampSec": 65,
+      "createdAt": "2026-10-25T18:27:28.964Z"
+    },
+    {
+      "id": 22,
+      "userId": 3,
+      "lessonId": 12,
+      "text": "Node Streams implement the Pipe pattern (readable.pipe(writable)).",
+      "timestampSec": 42,
+      "createdAt": "2026-10-25T18:27:28.964Z"
+    }
+  ],
+  "qa": [
+    {
+      "id": 23,
+      "lessonId": 12,
+      "userId": 3,
+      "userName": "Rahul Sharma",
+      "userRole": "student",
+      "question": "Why is HTTP 206 Partial Content preferred over 200 OK when delivering video lessons?",
+      "replies": [
+        {
+          "id": 24,
+          "userId": 2,
+          "userName": "Dr. John Doe",
+          "userRole": "instructor",
+          "text": "Great question Rahul! With 206 Partial Content and the Range header, the browser only downloads the bytes needed for current playback. When a student seeks to 10 minutes in, the server immediately pipes that specific byte slice without downloading all preceding megabytes. This drastically reduces server memory and bandwidth.",
+          "createdAt": "2026-10-25T18:27:28.964Z"
+        }
+      ],
+      "createdAt": "2026-10-24T18:27:28.964Z"
+    }
+  ],
+  "assignmentSubmissions": [],
+  "reviews": [
+    {
+      "id": 25,
+      "courseId": 4,
+      "userId": 3,
+      "userName": "Rahul Sharma",
+      "rating": 5,
+      "comment": "Exceptional course! The explanations of Node.js streams and secure token streaming are crystal clear.",
+      "createdAt": "2026-10-24T18:27:28.964Z"
+    }
+  ],
+  "notifications": [],
+  "nextId": 26
+}

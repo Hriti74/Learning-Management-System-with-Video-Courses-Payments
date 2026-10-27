@@ -1,0 +1,159 @@
+/* EduStream LMS Modern Stylesheet */
+:root {
+  --primary-color: #0d6efd;
+  --primary-hover: #0b5ed7;
+  --dark-bg: #1e293b;
+  --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.07), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+  --card-hover-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.05);
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  color: #334155;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1;
+}
+
+/* Hero Section */
+.hero-banner {
+  background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+  color: #ffffff;
+  padding: 3rem 2rem;
+  border-radius: 1rem;
+  margin-bottom: 2rem;
+  box-shadow: var(--card-shadow);
+}
+
+/* Course Cards */
+.course-card {
+  border: 1px solid #e2e8f0;
+  border-radius: 0.75rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  background-color: #ffffff;
+  overflow: hidden;
+  box-shadow: var(--card-shadow);
+}
+
+.course-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--card-hover-shadow);
+}
+
+.course-thumbnail-placeholder {
+  height: 140px;
+  background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  font-size: 2.5rem;
+}
+
+/* Video Player */
+.video-wrapper {
+  background-color: #000000;
+  border-radius: 0.75rem;
+  overflow: hidden;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.25);
+}
+
+.video-wrapper video {
+  width: 100%;
+  max-height: 480px;
+  display: block;
+  outline: none;
+}
+
+/* Lesson navigation sidebar */
+.lesson-list-group .list-group-item {
+  border-left: 3px solid transparent;
+  cursor: pointer;
+  transition: all 0.15s ease-in-out;
+}
+
+.lesson-list-group .list-group-item:hover {
+  background-color: #f1f5f9;
+}
+
+.lesson-list-group .list-group-item.active-lesson {
+  background-color: #e0f2fe;
+  color: #0369a1;
+  border-left-color: #0284c7;
+  font-weight: 600;
+}
+
+.lesson-list-group .list-group-item.completed-lesson {
+  background-color: #f0fdf4;
+}
+
+/* Timestamp Pill */
+.timestamp-pill {
+  cursor: pointer;
+  background-color: #e2e8f0;
+  color: #1e293b;
+  font-family: monospace;
+  font-weight: 600;
+  padding: 0.2rem 0.5rem;
+  border-radius: 0.35rem;
+  transition: background-color 0.15s ease;
+}
+
+.timestamp-pill:hover {
+  background-color: #cbd5e1;
+  color: #0f172a;
+}
+
+/* Certificate Card */
+.certificate-container {
+  max-width: 780px;
+  margin: 0 auto;
+  background: #ffffff;
+  border: 12px double #f59e0b;
+  border-radius: 1rem;
+  padding: 3rem 2.5rem;
+  text-align: center;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+.certificate-seal {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  font-size: 2.2rem;
+  box-shadow: 0 4px 6px -1px rgba(245, 158, 11, 0.4);
+  margin-bottom: 1rem;
+}
+
+/* Print view for certificate */
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  .certificate-container, .certificate-container * {
+    visibility: visible;
+  }
+  .certificate-container {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    border: 8px double #d97706;
+    box-shadow: none;
+    margin: 0;
+    padding: 2rem;
+  }
+  .no-print {
+    display: none !important;
+  }
+}

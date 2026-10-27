@@ -1,0 +1,393 @@
+{
+  "info": {
+    "name": "LMS Video Courses & Payments API (CE1)",
+    "description": "Comprehensive Postman Collection covering all REST API endpoints for CE1 Syllabus and Project 15: Learning Management System with Video Courses & Payments.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:3000/api", "type": "string" },
+    { "key": "token", "value": "", "type": "string" },
+    { "key": "streamToken", "value": "", "type": "string" }
+  ],
+  "item": [
+    {
+      "name": "1. Authentication",
+      "item": [
+        {
+          "name": "Login (Student / Instructor / Admin)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const json = pm.response.json();",
+                  "if (json.token) {",
+                  "    pm.collectionVariables.set('token', json.token);",
+                  "    console.log('Saved auth token to collection variable: token');",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"student@lms.com\",\n  \"password\": \"Student@123\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/auth/login", "host": ["{{baseUrl}}"], "path": ["auth", "login"] }
+          }
+        },
+        {
+          "name": "Register New User",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Amit Kumar\",\n  \"email\": \"amit@example.com\",\n  \"password\": \"AmitPass@123\",\n  \"role\": \"student\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/auth/register", "host": ["{{baseUrl}}"], "path": ["auth", "register"] }
+          }
+        },
+        {
+          "name": "Get Profile & Notifications (GET /auth/me)",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "{{baseUrl}}/auth/me", "host": ["{{baseUrl}}"], "path": ["auth", "me"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "2. Public Course Catalogue",
+      "item": [
+        {
+          "name": "List Approved Courses (with Filter & Pagination)",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/courses?page=1&limit=6&level=beginner&category=Web Development&price=paid",
+              "host": ["{{baseUrl}}"],
+              "path": ["courses"],
+              "query": [
+                { "key": "page", "value": "1" },
+                { "key": "limit", "value": "6" },
+                { "key": "level", "value": "beginner" },
+                { "key": "category", "value": "Web Development" },
+                { "key": "price", "value": "paid" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Course Syllabus & Details by ID",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/courses/4", "host": ["{{baseUrl}}"], "path": ["courses", "4"] }
+          }
+        },
+        {
+          "name": "Post Course Review & Rating",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"rating\": 5,\n  \"comment\": \"Outstanding depth on Node.js core streams and event loop concepts!\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/courses/4/reviews", "host": ["{{baseUrl}}"], "path": ["courses", "4", "reviews"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "3. Enrolments & Learning Room",
+      "item": [
+        {
+          "name": "Enrol in Course with Payment (POST /enrollments)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"courseId\": 4,\n  \"cardNumber\": \"4242424242424242\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/enrollments", "host": ["{{baseUrl}}"], "path": ["enrollments"] }
+          }
+        },
+        {
+          "name": "Get My Enrolled Courses (GET /my-courses)",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "{{baseUrl}}/my-courses", "host": ["{{baseUrl}}"], "path": ["my-courses"] }
+          }
+        },
+        {
+          "name": "Get Enrolment-Gated Course Room (GET /learn/:courseId)",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "{{baseUrl}}/learn/4", "host": ["{{baseUrl}}"], "path": ["learn", "4"] }
+          }
+        },
+        {
+          "name": "Get Short-Lived Signed Video Stream URL",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const json = pm.response.json();",
+                  "if (json.url) {",
+                  "    const token = json.url.split('/api/stream/')[1];",
+                  "    pm.collectionVariables.set('streamToken', token);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "{{baseUrl}}/lessons/7/stream-url", "host": ["{{baseUrl}}"], "path": ["lessons", "7", "stream-url"] }
+          }
+        },
+        {
+          "name": "Stream Video with HTTP 206 Partial Content (Range Request)",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Range", "value": "bytes=0-10240" }],
+            "url": { "raw": "{{baseUrl}}/stream/{{streamToken}}", "host": ["{{baseUrl}}"], "path": ["stream", "{{streamToken}}"] }
+          }
+        },
+        {
+          "name": "Update Video Watch Progress (Throttled)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"lessonId\": 7,\n  \"position\": 120.5,\n  \"completed\": false\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/progress", "host": ["{{baseUrl}}"], "path": ["progress"] }
+          }
+        },
+        {
+          "name": "Submit Quiz Attempt (Auto-Graded)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"answers\": [1, 2, 0, 2]\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/quizzes/9/attempt", "host": ["{{baseUrl}}"], "path": ["quizzes", "9", "attempt"] }
+          }
+        },
+        {
+          "name": "Add Timestamped Note (POST /lessons/:id/notes)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"text\": \"Node Streams use EventEmitter under the hood for data and end events.\",\n  \"timestampSec\": 142\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/lessons/7/notes", "host": ["{{baseUrl}}"], "path": ["lessons", "7", "notes"] }
+          }
+        },
+        {
+          "name": "Post Q&A Question",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"question\": \"How do we handle backpressure when reading a large video file into a slow socket?\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/lessons/7/qa", "host": ["{{baseUrl}}"], "path": ["lessons", "7", "qa"] }
+          }
+        },
+        {
+          "name": "Submit Assignment Project",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"submissionUrl\": \"https://github.com/rahul/lms-rest-api\",\n  \"comments\": \"Implemented JWT RBAC, Multer storage, and Range streaming with 100% test coverage.\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/lessons/10/assignment-submit", "host": ["{{baseUrl}}"], "path": ["lessons", "10", "assignment-submit"] }
+          }
+        },
+        {
+          "name": "Get Certificate of Completion",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "{{baseUrl}}/certificates/4", "host": ["{{baseUrl}}"], "path": ["certificates", "4"] }
+          }
+        },
+        {
+          "name": "Public Certificate Verification",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/certificates/verify/CERT-4-3", "host": ["{{baseUrl}}"], "path": ["certificates", "verify", "CERT-4-3"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "4. Instructor Studio",
+      "item": [
+        {
+          "name": "Get Instructor Courses",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "{{baseUrl}}/instructor/courses", "host": ["{{baseUrl}}"], "path": ["instructor", "courses"] }
+          }
+        },
+        {
+          "name": "Create Course (Pending Status)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Advanced TypeScript for Backend Microservices\",\n  \"description\": \"Master generics, decorators, and type-safe Express architectures.\",\n  \"price\": 599,\n  \"category\": \"Backend Engineering\",\n  \"level\": \"advanced\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/instructor/courses", "host": ["{{baseUrl}}"], "path": ["instructor", "courses"] }
+          }
+        },
+        {
+          "name": "Grade Student Assignment Submission",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"grade\": \"Passed\",\n  \"feedback\": \"Clean code structure and excellent use of custom middleware!\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/instructor/submissions/1/grade", "host": ["{{baseUrl}}"], "path": ["instructor", "submissions", "1", "grade"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "5. Admin Console",
+      "item": [
+        {
+          "name": "Get Admin Overview Stats",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "{{baseUrl}}/admin/stats", "host": ["{{baseUrl}}"], "path": ["admin", "stats"] }
+          }
+        },
+        {
+          "name": "List All Courses for Admin",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "{{baseUrl}}/admin/courses", "host": ["{{baseUrl}}"], "path": ["admin", "courses"] }
+          }
+        },
+        {
+          "name": "Approve or Reject Course",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"approved\",\n  \"feedback\": \"Verified high quality video content.\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/admin/courses/6/status", "host": ["{{baseUrl}}"], "path": ["admin", "courses", "6", "status"] }
+          }
+        },
+        {
+          "name": "Get User Directory",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "{{baseUrl}}/admin/users", "host": ["{{baseUrl}}"], "path": ["admin", "users"] }
+          }
+        },
+        {
+          "name": "Toggle User Status (Block / Unblock)",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"active\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/admin/users/3/status", "host": ["{{baseUrl}}"], "path": ["admin", "users", "3", "status"] }
+          }
+        },
+        {
+          "name": "Get Financial & Revenue Report (20% Platform Fee)",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "{{baseUrl}}/admin/reports/revenue", "host": ["{{baseUrl}}"], "path": ["admin", "reports", "revenue"] }
+          }
+        },
+        {
+          "name": "Process Instructor Payout (POST /admin/payouts)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"instructorId\": 2,\n  \"amount\": 399.20,\n  \"reference\": \"NEFT-20261026-009182\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/admin/payouts", "host": ["{{baseUrl}}"], "path": ["admin", "payouts"] }
+          }
+        }
+      ]
+    }
+  ]
+}
