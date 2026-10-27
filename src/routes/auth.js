@@ -19,7 +19,7 @@ router.post(
   body('name').trim().notEmpty().withMessage('Name is required').escape(),
   body('email').isEmail().withMessage('Valid email required').normalizeEmail(),
   body('password').isLength({ min: 6 }).withMessage('Password must be at least 6 characters'),
-  body('role').isIn(['student', 'instructor']).withMessage('Role must be student or instructor'),
+  body('role').isIn(['student', 'instructor']).withMessage('Role be student or instructor'),
   validate,
   async (req, res, next) => {
     try {
