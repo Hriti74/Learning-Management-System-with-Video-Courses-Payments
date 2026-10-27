@@ -42,7 +42,7 @@ function mockPaymentGateway(cardNumber, amount) {
 // -------------------------------------------------------------
 
 // POST /api/enrollments
-router.post
+router.post(
   '/enrollments',
   protect,
   allow('student'),
